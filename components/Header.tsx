@@ -1,3 +1,4 @@
+"use client";
 
 import { Button } from './ui/button';
 import Link from 'next/link';
@@ -10,24 +11,35 @@ import {
     ShoppingCart,
     User,
   } from "lucide-react";
+import { FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
 
 function Header() {
+    const router = useRouter()
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+const input = e.currentTarget.input.value;
+router.push(`/search?q=${input}`);
+    }
+
   return (
   <header className='flex flex-col md:flex-row bg-walmart items-center px-10 py-7 space-x-5'>
     <Link href="/" className='mb-5 md:mb-0'>
         <Image
-        src="https://links.papareact.com/yur"
+        src="https://i.imgur.com/5V4wehM.png"
         alt='Logo'
         width={150}
         height={150}
         />
         </Link>
 
-<form className='flex items-center bg-white rounded-full w-full flex-1 '>
+<form onSubmit={handleSubmit} className='flex items-center bg-white rounded-full w-full flex-1 '>
     <input 
     type='text' 
+    name='input'
     placeholder='Search Everything...'
-    className='flex-1 px-4 rounded-l-full outline-none placeholder:text-sm'
+    className='flex-1 px-4 rounded-l-full outline-none placeholder:text-sm text-black'
     />
     <button type='submit'>
         <Search className='rounded-full h-10 px-2 w-10 bg-yellow-400 cursor-pointer'/>
@@ -76,7 +88,7 @@ className="hidden xl:flex text-white font-bold items-center space-x-2 text-sm"
 
 
         <Link
-          href={"/"}
+          href={"/basket"}
           className="flex text-white font-bold items-center space-x-2 text-sm"
         >
           <ShoppingCart size={20} />
